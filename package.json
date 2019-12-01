@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start:task-1": "node task-1/index.js",
-    "dev:task-1": "nodemon task-1/index.js"
+    "dev:task-1": "nodemon task-1/index.js",
+    "start:task-2": "node task-2/index.js",
+    "dev:task-2": "nodemon task-2/index.js"
   },
   "dependencies": {
     "express": "~4.16.1",
