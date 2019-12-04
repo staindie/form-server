@@ -31,7 +31,11 @@ function fillStat(stat) {
 }
 
 async function sendVote(id) {
-    const promise = await fetch(`./vote?id=${id}`);
+    const promise = await fetch('./vote', {
+        method: 'POST',
+        body: JSON.stringify({ id }),
+        headers: { 'Content-Type': 'application/json' }
+    });
     if (promise.ok) {
         const newStat = await getApi('./stat');
         fillStat(newStat);

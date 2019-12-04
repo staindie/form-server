@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 7781;
 
@@ -9,6 +10,9 @@ const variants = [
 ];
 let stat = {};
 
+// app.use(express.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
 app.use(express.static(__dirname + '/fe'));
 
 app.get('/', function (req, res) {
@@ -23,8 +27,14 @@ app.get('/stat', function (req, res) {
   res.json(stat);
 });
 
-app.get('/vote', function (req, res) {
-  let { id } = req.query;
+app.get('/download-stat', function (req, res) {
+  res.setHeader("Content-Disposition", "attachment");
+  res.setHeader("Content-Type", "application/json");
+  res.json(stat);
+});
+
+app.post('/vote', function (req, res) {
+  let { id } = req.body;
   if (id && stat[id] && Number(stat[id])) {
     stat[id]++;
   } else {
