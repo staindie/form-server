@@ -1,5 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const { toXML } = require('jstoxml');
+const { transform: toHtml } = require('node-json2html');
+
 const app = express();
 const port = process.env.PORT || 7781;
 
@@ -10,10 +13,12 @@ const variants = [
 ];
 let stat = {};
 
+const mapStat = (stat) => variants.map(({ id, name }) => ({ name, value: stat[id] }));
+
 // app.use(express.urlencoded({extended:true}));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/fe'));
+app.use(express.static(__dirname + '/fe', { etag: true }));
 
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/fe/index.html');
@@ -28,9 +33,24 @@ app.get('/stat', function (req, res) {
 });
 
 app.get('/download-stat', function (req, res) {
-  res.setHeader("Content-Disposition", "attachment");
-  res.setHeader("Content-Type", "application/json");
-  res.json(stat);
+  let { type } = req.query;
+  let result;
+  res.setHeader('Content-Disposition', 'attachment');
+  switch (type) {
+    case 'json':
+      res.setHeader('Content-Type', 'application/json');
+      result = mapStat(stat);
+      break;
+    case 'xml':
+      res.setHeader('Content-Type', 'application/xml');
+      result = toXML(mapStat(stat));
+      break;
+    case 'html':
+      const template = {'<>':'div','html':'${name}: ${value}'};
+      res.setHeader('Content-Type', 'text/html');
+      result = toHtml(mapStat(stat), template);
+  }
+  res.json(result);
 });
 
 app.post('/vote', function (req, res) {

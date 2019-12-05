@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "express": "~4.16.1",
+    "jstoxml": "^1.6.0",
+    "node-json2html": "^1.3.0",
     "nodemon": "^2.0.1"
   }
 }

@@ -10,9 +10,9 @@
         <div id="buttons"></div>
     </section>
     <section style="margin-top: 10px">
-        <form>
-            <button type="submit" formaction="/download-stat">Download JSON</button>
-        </form>
+        <button onclick="window.location.href = './download-stat?type=json'">Download JSON</button>
+        <button onclick="window.location.href = './download-stat?type=xml'">Download XML</button>
+        <button onclick="window.location.href = './download-stat?type=html'">Download HTML</button>
     </section>
     <script src="./application.js"></script>
 </body>
