@@ -1,10 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 const { toXML } = require('jstoxml');
 const { transform: toHtml } = require('node-json2html');
 
 const app = express();
 const port = process.env.PORT || 7781;
+const statFilePath = './task-2/stat.json';
 
 const variants = [
   { id: '01', name: 'variant 1' },
@@ -14,6 +16,14 @@ const variants = [
 let stat = {};
 
 const mapStat = (stat) => variants.map(({ id, name }) => ({ name, value: stat[id] }));
+
+const readStat = () => {
+  let stat = {};
+  if (fs.existsSync(statFilePath)) {
+      stat = JSON.parse(fs.readFileSync(statFilePath));
+  }
+  return stat;
+};
 
 // app.use(express.urlencoded({extended:true}));
 app.use(bodyParser.urlencoded({extended:true}));
@@ -29,37 +39,40 @@ app.get('/variants', function (req, res) {
 });
 
 app.get('/stat', function (req, res) {
-  res.json(stat);
+  res.json(readStat());
 });
 
 app.get('/download-stat', function (req, res) {
   let { type } = req.query;
-  let result;
+  let result = mapStat(readStat());
   res.setHeader('Content-Disposition', 'attachment');
   switch (type) {
     case 'json':
       res.setHeader('Content-Type', 'application/json');
-      result = mapStat(stat);
       break;
     case 'xml':
       res.setHeader('Content-Type', 'application/xml');
-      result = toXML(mapStat(stat));
+      result = toXML(result);
       break;
     case 'html':
       const template = {'<>':'div','html':'${name}: ${value}'};
       res.setHeader('Content-Type', 'text/html');
-      result = toHtml(mapStat(stat), template);
+      result = toHtml(result, template);
   }
   res.json(result);
 });
 
 app.post('/vote', function (req, res) {
-  let { id } = req.body;
+  let { id } = req.body,
+      stat = readStat();
+
   if (id && stat[id] && Number(stat[id])) {
     stat[id]++;
   } else {
     stat[id] = 1;
   }
+
+  fs.writeFileSync(statFilePath, JSON.stringify(stat));
   res.send();
 });
 
