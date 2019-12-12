@@ -9,6 +9,7 @@
     "dev:task-2": "nodemon task-2/index.js"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.4",
     "express": "~4.16.1",
     "jstoxml": "^1.6.0",
     "node-json2html": "^1.3.0",
