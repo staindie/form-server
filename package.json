@@ -6,12 +6,16 @@
     "start:task-1": "node task-1/index.js",
     "dev:task-1": "nodemon task-1/index.js",
     "start:task-2": "node task-2/index.js",
-    "dev:task-2": "nodemon task-2/index.js"
+    "dev:task-2": "nodemon task-2/index.js",
+    "start:task-3": "node task-3/index.js",
+    "dev:task-3": "nodemon task-3/index.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.4",
     "express": "~4.16.1",
     "jstoxml": "^1.6.0",
+    "multer": "^1.4.2",
+    "node-fetch": "^2.6.0",
     "node-json2html": "^1.3.0",
     "nodemon": "^2.0.1"
   }

@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    max-width: 1000px;
+}
+
+.container section {
+    margin: 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form input, .form select, .form button {
+    margin-bottom: 10px;
+}
