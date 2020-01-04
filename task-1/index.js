@@ -18,7 +18,7 @@ app.use(function (req, res, next) {
 });
 
 function createForm(loginValue = '') {
-    let formTemplate = fs.readFileSync('task-1/form.html'),
+    let formTemplate = fs.readFileSync('task-1/index.html'),
         loginTemplate = '{login}';
     return formTemplate.toString().replace(loginTemplate, loginValue);
 }

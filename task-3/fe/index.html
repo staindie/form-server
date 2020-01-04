@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <section>
+            <h2>Saved items</h2>
+            <div class="form">
+                <select id="request-selector" onchange="fillRequestForm(event)"></select>
+            </div>
+        </section>
+        <section>
+            <h2>Form</h2>
+            <form name="requestForm" class="form">
+                <div>
+                    <label for="url">URL:</label>
+                    <input placeholder="url" name="url" />
+                </div>
+                <div>
+                    <label for="method">Method:</label>
+                    <select placeholder="method" name="method" >
+                        <option>GET</option>
+                        <option>POST</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="headers">Headers:</label>
+                    <input placeholder="headers" name="headers"/>
+                </div>
+                <div>
+                    <label for="contentType">Content-type:</label>
+                    <input placeholder="content-type" name="contentType">
+                </div>
+                <div>
+                    <label for="body">Body:</label>
+                    <input placeholder="body" name="body">
+                </div>
+
+                <button type="button" onclick="handleSendReq()">Send</button>
+                <button type="button" onclick="handleSaveReq()">Save</button>
+            </form>
+        </section>
+        <section>
+            <h2>Response</h2>
+            <div id="response-panel"></div>
+        </section>
+    </div>
+    <script src="application.js"></script>
+</body>
+</html>
