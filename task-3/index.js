@@ -46,8 +46,8 @@ async function getFullResponse(res) {
     return {
         ok: res.statusText,
         status: res.status,
-        body: await res.json(),
-        headers: res.headers
+        body: await res.text(),
+        headers: JSON.stringify(res.headers.raw())
     }
 }
 

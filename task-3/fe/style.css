@@ -15,3 +15,7 @@
 .form input, .form select, .form button {
     margin-bottom: 10px;
 }
+
+.request-selector {
+    width: 300px;
+}

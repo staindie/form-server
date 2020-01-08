@@ -75,7 +75,7 @@ function fillResponsePanel(response) {
             const caption = document.createElement('h4');
             const content = document.createElement('p');
             caption.innerHTML = fieldName;
-            content.innerHTML = JSON.stringify(displayResult[fieldName]);
+            content.innerHTML = displayResult[fieldName];
             container.appendChild(caption);
             container.appendChild(content);
             responsePanel.appendChild(container);
