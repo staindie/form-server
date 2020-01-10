@@ -2,22 +2,22 @@
     getDbItemsList();
 })();
 
-async function toJson(data) {
-    try {
-        return data.json();
-    } catch {
-        return [];
+async function handleResponse(data,callback) {
+    const result = await data.json();
+    if (data.ok) {
+        callback(result);
+    } else {
+        alert(result.sqlMessage);
     }
 }
 
-function getDbItemsList() {
-    fetch('./post-query', {
+async function getDbItemsList() {
+    const res = await fetch('./post-query', {
         method: 'POST',
         body: JSON.stringify({ query: 'SHOW DATABASES;' }),
         headers: { 'Content-Type': 'application/json' }
     })
-        .then( response => toJson(response))
-        .then( response =>  fillDbItemsList(response));
+        .then( response =>  handleResponse(response, fillDbItemsList));
 }
 
 function fillDbItemsList(items) {
@@ -41,12 +41,10 @@ function handleDbQuery() {
         method: 'POST',
         body: getFormData()
     })
-        .then( response => toJson(response))
-        .then( response =>  fillTable(response));
+        .then( response => handleResponse(response, fillTable));
 }
 
 function fillTable(response) {
-    console.log(response);
     const tablePanel = document.getElementById('response-table');
     tablePanel.innerHTML = '';
     if (response && response.length) {

@@ -37,7 +37,7 @@ app.post('/post-query', async ({ body }, res) => {
         res.send(result);
     }
     catch ( error ) {
-        res.status(500).end();
+        res.status(500).send(error);
         logLineAsync(logFN,`[${port}] `+error);
     }
     finally {
